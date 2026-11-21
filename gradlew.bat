@@ -1,3 +1,4 @@
+#amine ownership
 @echo off
 setlocal
 set "APP_HOME=%~dp0"
