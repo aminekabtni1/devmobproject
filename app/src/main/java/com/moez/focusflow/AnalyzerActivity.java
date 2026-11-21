@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-/** Validation + REAL on-device TFLite inference, not rule-based predictions. */
+/** Form validation followed by on-device TFLite inference. */
 public final class AnalyzerActivity extends Activity {
     private EditText minutes, interruptions, breaks, energy;
     private FocusPredictor model;

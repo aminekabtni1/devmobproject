@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Private on-device history. No permissions, accounts, or remote server. */
+/** Private on-device history stored in SharedPreferences. */
 public final class SessionStore {
     private static final String PREFS = "focusflow_history_v2";
     private static final String KEY = "sessions";

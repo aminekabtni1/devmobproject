@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 
-/** Short branded launch screen; does not block model initialization or require network. */
+/** Branded launch screen; runs briefly before handing off to the dashboard. */
 public final class SplashActivity extends Activity {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable navigate = () -> {

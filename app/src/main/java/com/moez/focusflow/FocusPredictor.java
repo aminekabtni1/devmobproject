@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-/** Real on-device inference through LiteRT's TensorFlow Lite Interpreter. */
+/** Loads the bundled TensorFlow Lite model and runs inference on-device. */
 public final class FocusPredictor implements AutoCloseable {
     public static final class Prediction {
         public final float adjustmentScore;
@@ -23,7 +23,6 @@ public final class FocusPredictor implements AutoCloseable {
     private Interpreter interpreter;
 
     public FocusPredictor(Context context) throws Exception {
-        // 1. Load the actual .tflite FlatBuffer model from the app's assets.
         ByteBuffer modelBuffer = readAsset(context, "focusflow.tflite");
         interpreter = new Interpreter(modelBuffer, new Interpreter.Options().setNumThreads(2));
         int[] input = interpreter.getInputTensor(0).shape();
@@ -60,9 +59,7 @@ public final class FocusPredictor implements AutoCloseable {
                 breaks < 0 || breaks > 25 || energy < 1 || energy > 5) {
             throw new IllegalArgumentException("Input outside supported range");
         }
-        // 2. Encode a [1,4] FLOAT32 input tensor.
         float[][] input = {{duration / 120f, interruptions / 15f, breaks / 25f, energy / 5f}};
-        // 3. Obtain the real [1,2] SOFTMAX output tensor.
         float[][] output = new float[1][2];
         interpreter.run(input, output);
         if (!Float.isFinite(output[0][0]) || !Float.isFinite(output[0][1])) {

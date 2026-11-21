@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/** Small no-dependency UI utilities and persistent bottom-tab navigation. */
+/** Lightweight UI helpers and shared bottom-tab navigation. */
 public final class AppUi {
     private AppUi() {}
     public static final int DARK = Color.rgb(19, 31, 60);

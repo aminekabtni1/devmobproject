@@ -9,7 +9,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-/** Accessible semicircular visual indicator for a model's educational match score. */
+/** Semicircular indicator drawn for the model's pattern-match score. */
 public final class ScoreRingView extends View {
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private float displayed;

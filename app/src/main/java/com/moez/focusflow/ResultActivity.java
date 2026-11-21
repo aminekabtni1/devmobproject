@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import java.util.Locale;
 
-/** Plain-language interpretation; tips are deterministic, score is genuine model output. */
+/** Plain-language interpretation; tips follow fixed rules, the score comes from the model. */
 public final class ResultActivity extends Activity {
     private int score, minutes, interruptions, breaks, energy;
     @Override protected void onCreate(Bundle saved) {

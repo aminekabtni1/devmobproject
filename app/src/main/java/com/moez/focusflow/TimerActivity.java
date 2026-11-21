@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Locale;
 
-/** Practical focus/break timer independent of ML predictions; persists through screen changes. */
+/** Focus/break timer, independent of the ML model; state persists across restarts. */
 public final class TimerActivity extends Activity {
     private static final String PREFS="focusflow_timer";
     private final Handler handler=new Handler(Looper.getMainLooper());

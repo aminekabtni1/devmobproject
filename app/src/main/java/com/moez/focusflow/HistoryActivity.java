@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-/** Persistent private history of actual analyses; no fake demonstration history. */
+/** Persistent history of actual analyses. */
 public final class HistoryActivity extends Activity {
     @Override protected void onCreate(Bundle saved) {
         super.onCreate(saved);

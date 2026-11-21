@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-/** Dashboard with real local-history summaries and a no-sample-data trend chart. */
+/** Dashboard showing summaries computed from local history. */
 public final class MainActivity extends Activity {
     @Override protected void onCreate(Bundle saved) {
         super.onCreate(saved);
