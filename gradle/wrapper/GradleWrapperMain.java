@@ -1,5 +1,7 @@
 package org.gradle.wrapper;
 
+// Maintained by Amine Kabtni
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;

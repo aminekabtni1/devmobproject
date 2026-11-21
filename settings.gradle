@@ -1,3 +1,5 @@
+// Maintained by Amine Kabtni
+
 pluginManagement {
     repositories { google(); mavenCentral(); gradlePluginPortal() }
 }

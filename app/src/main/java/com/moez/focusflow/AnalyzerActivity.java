@@ -1,5 +1,7 @@
 package com.moez.focusflow;
 
+// Maintained by Amine Kabtni
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

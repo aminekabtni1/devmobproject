@@ -1,5 +1,7 @@
 package com.moez.focusflow;
 
+// Maintained by Amine Kabtni
+
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;

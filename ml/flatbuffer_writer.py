@@ -1,6 +1,8 @@
 import struct
 import numpy as np
 
+# Maintained by Amine Kabtni
+
 class FlatBufferWriter:
  """Small reverse FlatBuffer schema writer for TFLite FULLY_CONNECTED/RELU/SOFTMAX."""
  def __init__(self): self.buf=bytearray();self.minalign=1;self.vtable=None;self.object_start=0

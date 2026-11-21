@@ -1,2 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Maintained by Amine Kabtni -->
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"><background android:drawable="@color/midnight"/><foreground android:drawable="@drawable/ic_focusflow_mark"/></adaptive-icon>

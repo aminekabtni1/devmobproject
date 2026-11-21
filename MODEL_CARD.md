@@ -1,5 +1,7 @@
 # Model Card — FocusFlow AI educational classifier
 
+Maintained by Amine Kabtni.
+
 ## Objective
 
 Classify whether four numeric study-session properties resemble a **synthetically generated balanced pattern** or a **synthetically generated needs-adjustment pattern**. The model's probability is used for a visual match score, not for clinically measuring concentration or productivity.

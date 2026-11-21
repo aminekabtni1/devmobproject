@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Maintained by Amine Kabtni
 """Reproducible educational synthetic-data training and FLOAT32 TFLite export.
 
 This is not a scientifically validated study-performance prediction model.

@@ -1,5 +1,7 @@
 # Manual test checklist and screenshot plan
 
+Maintained by Amine Kabtni.
+
 Run the app on a real Android emulator or physical phone after a successful Gradle build.
 
 | Test | Action | Expected result | Screenshot |

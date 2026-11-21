@@ -1,5 +1,7 @@
 # FocusFlow AI — Intelligent Study Analytics
 
+Maintained by Amine Kabtni.
+
 FocusFlow AI is an Android application that helps students reflect on their study sessions. It uses an on-device TensorFlow Lite model to compare session details with synthetic study patterns, displays a session score, and stores results locally for review.
 
 The model is trained on **synthetic data**. Its score represents similarity to a generated balanced study pattern; it is not a scientifically validated measure of concentration, productivity, or health.

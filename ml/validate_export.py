@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Maintained by Amine Kabtni
 """Standalone TFLite structural checker; does not claim native LiteRT execution."""
 from pathlib import Path
 import json
