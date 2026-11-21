@@ -1,106 +1,96 @@
-# FocusFlow AI v2.0 — Study Intelligence
+# FocusFlow AI — Intelligent Study Analytics
 
-**A complete, redesigned Android Assignment No. 2 project**  
-Java • XML • Offline TensorFlow Lite inference • Private local history • Focus timer
+FocusFlow AI is an Android application that helps students reflect on their study sessions. It uses an on-device TensorFlow Lite model to compare session details with synthetic study patterns, displays a session score, and stores results locally for review.
 
-> This is the upgraded version of FocusFlow AI, not Spam Shield. It is intended to demonstrate real on-device ML in a university Android application. The ML model is trained on *synthetic* study-session records; it does **not** measure concentration or health scientifically.
+The model is trained on **synthetic data**. Its score represents similarity to a generated balanced study pattern; it is not a scientifically validated measure of concentration, productivity, or health.
 
-## What the app does
+## Main features
 
-FocusFlow AI helps students reflect on a study session by entering four metrics:
+- **Session analysis:** Enter study duration, phone interruptions, break time, and self-rated energy, or try a sample preset.
+- **Results and study tips:** Review a score gauge, session summary, and separate rule-based recommendations, with an option to share the result.
+- **Dashboard and history:** View session summaries and trends, revisit saved results, and clear history when needed. The app retains the latest 60 analyses.
+- **Focus timer:** Start, pause, and reset 25- or 45-minute focus sessions and a 5-minute break.
+- **Offline operation:** Inference runs on the device with a bundled model. No account or remote database is required, and session history is stored in private app storage.
 
-1. **Duration:** 10–120 minutes
-2. **Interruptions:** 0–15
-3. **Breaks:** 0–25 minutes
-4. **Energy:** 1–5
+## Technologies used
 
-A real `.tflite` model (`app/src/main/assets/focusflow.tflite`) processes these four normalized numbers with `org.tensorflow.lite.Interpreter.run(...)`. The AI produces two probabilities; the app displays the *balanced-pattern score* as a visual gauge and provides clearly separated, rule-based study tips. Results are saved privately on the device, with a history chart showing the user's own analyses.
-
-## Screens and features
-
-| Screen | Purpose |
+| Technology | Purpose |
 |---|---|
-| **SplashActivity** | Branded splash screen with custom visual mark, tagline and entrance animation |
-| **MainActivity** | Modern dashboard with greeting, cumulative summaries, actual trend chart and shortcuts |
-| **AnalyzerActivity** | Four validated input cards, useful sample presets, model-ready status and genuine TFLite inference |
-| **ResultActivity** | Animated score ring, category interpretation, metric summary, separate recommendations and share action |
-| **TimerActivity** | Start/pause/reset 25- or 45-minute focus sessions and a 5-minute break; retains running state across screens |
-| **HistoryActivity** | Local records, a seven-session trend chart, tap-to-review, confirm-to-clear and empty state |
+| Java | Android application logic |
+| XML | Android layouts and resources |
+| TensorFlow Lite / LiteRT 1.4.2 | On-device model inference |
+| SharedPreferences and JSON | Local session history |
+| Python | Synthetic-data model training and export tools |
+| Android Gradle Plugin 8.7.3 and Gradle 8.9 | Build tooling |
 
-**Design:** navy/violet/teal theme, original vector branding, rounded XML cards, fixed four-tab navigation, clear typographic hierarchy, scrolling layouts, and no required third-party UI library.
+## Machine learning integration
 
-**Privacy:** No app account, ad SDK, analytics tracker, internet permission or remote database. Session history uses private `SharedPreferences` and JSON; the last 60 analyses are retained until cleared. The ML model and runtime are packaged inside the application.
+The bundled model, `app/src/main/assets/focusflow.tflite`, takes four normalized inputs:
 
-## Open in Android Studio — IMPORTANT
+| Input | Accepted range | Normalization |
+|---|---|---|
+| Study duration | 10–120 minutes | Divide by 120 |
+| Phone interruptions | 0–15 | Divide by 15 |
+| Total break time | 0–25 minutes | Divide by 25 |
+| Self-rated energy | 1–5 | Divide by 5 |
 
-1. Extract `FocusFlowAI_Pro_AndroidStudio_Project.zip` with **Extract All**.
-2. Open **Android Studio → File → Open**.
-3. Select the single extracted folder **`FocusFlowAI_Pro_Android_Project`**. **It directly contains `settings.gradle`, `build.gradle`, `gradlew.bat` and `app/`.** Do not open the `app` subfolder or the folder above it.
-4. Select **Trust Project** if prompted.
-5. Ensure **JDK 17** and **Android SDK Platform 35** are available (Android Studio Settings → Build Tools → Gradle, and Tools → SDK Manager).
-6. Allow the initial Gradle dependency sync to download Android Gradle Plugin **8.7.3**, Gradle **8.9**, and LiteRT **1.4.2** (first sync needs internet; model inference does not).
-7. Wait for **Gradle sync**; choose the **app** run configuration and a phone/emulator, then click ▶ **Run**.
-8. You should see **Splash → Dashboard**. Tap **Start an AI analysis**, choose a preset, then **Analyze with AI**.
+The app passes a `[1,4]` float32 input tensor to the TensorFlow Lite interpreter. The model returns a `[1,2]` softmax output for the synthetic *needs-adjustment* and *balanced* classes. The balanced-class probability supplies the displayed score. Study tips use separate fixed rules and are not explanations generated by the model.
 
-**If the Run button says “Add Configuration”**: check that you opened the folder with `settings.gradle`, then choose **File → Sync Project with Gradle Files**. You may need to create an **Android App** run configuration targeting module `app` after a successful Gradle sync.
+Training labels come from generated examples, not human productivity studies or verified student outcomes. No accuracy claim on real student data is supported. Results should not be used for grading, employment decisions, or medical advice.
 
-### Gradle-wrapper disclosure
+See the [model card](MODEL_CARD.md) for model details, data privacy, and limitations. The `ml/` directory contains the synthetic-data training and export tools; retraining is not required to use the bundled model.
 
-The bundled `gradle/wrapper/gradle-wrapper.jar` is the same small **transparent educational bootstrap** included with the earlier FocusFlow project, **not Gradle's standard official wrapper JAR**. Its inspectable Java source is `gradle/wrapper/GradleWrapperMain.java`; it downloads and launches the official Gradle 8.9 distribution from Gradle's distribution server. For normal long-term use, replace it with the official wrapper: install Gradle and run `gradle wrapper --gradle-version 8.9`. The bootstrap and official Gradle dependencies require internet initially. Do not mistake this bundled bootstrap for a Gradle-signed official JAR.
+## Application structure
 
-## Project map
+| Location | Contents |
+|---|---|
+| `app/src/main/java/com/moez/focusflow/` | Splash, dashboard, analyzer, result, timer, and history screens; inference, storage, and custom views |
+| `app/src/main/res/` | Layouts, visual resources, and application styling |
+| `app/src/main/assets/focusflow.tflite` | Bundled TensorFlow Lite model |
+| `ml/` | Model training, export, and validation tools |
+| `docs/` | Manual test checklist and screenshot guidance |
+| `gradle/wrapper/` | Gradle launcher files and disclosure |
+| `MODEL_CARD.md` | Model inputs, outputs, synthetic training data, and limitations |
 
-```text
-FocusFlowAI_Pro_Android_Project/    ← OPEN THIS FOLDER IN ANDROID STUDIO
-├── app/
-│   ├── build.gradle
-│   └── src/main/
-│       ├── AndroidManifest.xml
-│       ├── assets/focusflow.tflite
-│       ├── java/com/moez/focusflow/
-│       │   ├── SplashActivity.java
-│       │   ├── MainActivity.java
-│       │   ├── AnalyzerActivity.java
-│       │   ├── ResultActivity.java
-│       │   ├── TimerActivity.java
-│       │   ├── HistoryActivity.java
-│       │   ├── FocusPredictor.java
-│       │   ├── SessionStore.java
-│       │   ├── TrendChartView.java
-│       │   ├── ScoreRingView.java
-│       │   └── AppUi.java
-│       └── res/{layout,drawable,values,mipmap-anydpi-v26}/
-├── ml/                         # synthetic-data training/export and verification tools
-├── docs/                       # assignment walkthrough, test plan, screenshot instructions
-├── MODEL_CARD.md                # model limitations and data disclosure
-├── BUILD_STATUS.md              # exactly what was/was not verified
-├── gradle/wrapper/*
-├── gradlew.bat
-└── settings.gradle
-```
+## Installation
 
-## Example demonstration cases
+### Requirements
 
-| Duration | Interruptions | Breaks | Energy | Intended pattern |
-|---:|---:|---:|---:|---|
-| 75 | 1 | 12 | 4 | Generally resembles balanced synthetic examples |
-| 35 | 10 | 0 | 2 | Generally resembles the less-balanced examples |
+- Android Studio
+- JDK 17
+- Android SDK Platform 35
+- An Android emulator or physical Android device
+- Internet access for the initial dependency download
 
-The actual result comes from the `.tflite` model, **not fixed prediction rules**. The recommendations are based on transparent, non-ML conditions to help a student reflect on their inputs; they are not represented as neural-network explanations.
+### Open and run
 
-## Model pipeline
+1. Clone the repository or download and extract it from GitHub.
+2. In Android Studio, select **File → Open** and choose the repository root containing `settings.gradle`, `build.gradle`, and the `app/` directory.
+3. Configure JDK 17 for Gradle and install Android SDK Platform 35 through the SDK Manager if needed.
+4. Allow Gradle sync to download the required dependencies.
+5. Select the **app** run configuration and an emulator or connected device, then select **Run**.
 
-```text
-XML EditTexts → input validation → normalization (duration/120,
-interruptions/15, breaks/25, energy/5) → [1,4] float32 input →
-Interpreter.run() → [1,2] float32 softmax output → score ring →
-local JSON history + basic tips
-```
+If no run configuration appears, confirm that the repository root is open and select **File → Sync Project with Gradle Files**.
 
-The model is educational and trained with generated examples; see [MODEL_CARD.md](MODEL_CARD.md) and `ml/train_and_export.py` for exact logic. Model assets are **not** downloaded at runtime.
+**Gradle launcher:** The bundled `gradle-wrapper.jar` is a custom bootstrap that downloads and launches the official Gradle 8.9 distribution. It is not the official Gradle Wrapper JAR. See the [Gradle launcher disclosure](gradle/wrapper/README.md) for details.
 
-## Android 16 KB page-size compatibility
+The model and inference runtime are bundled with the application, so session analysis does not require internet access after installation.
 
-The project uses Android Gradle Plugin 8.7.3 and LiteRT 1.4.2. The APK will include native LiteRT code, so **16 KB compatibility must be inspected on the actual APK** and tested with a 16 KB emulator where available. Do not claim verification based on source metadata. Inspect **Build → Analyze APK → lib/** and check ELF LOAD and packaging alignment with the latest Android tooling.
+## How to use
 
-**Assignment context:** KICSIT / IST · Android Assignment No. 2 · Java + XML + TFLite demonstration.
+1. Open the app to reach the dashboard.
+2. Select **Start an AI analysis** and enter the four session metrics, or choose a sample preset.
+3. Select **Analyze with AI** to view the score, session summary, and study tips.
+4. Open **History** to review saved sessions and trends. Use **Clear History** to remove saved records after confirmation.
+5. Open **Timer** to start a focus session or short break, pausing or resetting it as needed.
+
+## Additional documentation
+
+- [Model card](MODEL_CARD.md)
+- [Manual test checklist](docs/TEST_PLAN.md)
+- [Screenshot guidance](docs/screenshots/README.md)
+- [Gradle launcher disclosure](gradle/wrapper/README.md)
+
+## Acknowledgments
+
+Originally developed in the KICSIT / IST Android coursework context. The instructor's `NumberGuessingAppTflite` served as a reference for loading and running a TensorFlow Lite model on Android. FocusFlow AI uses its own dataset, model, input features, and user interface.
